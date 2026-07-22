@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-2.0
 /*
- * ch04-stack/core.c - Core module maintaining sample store and exports.
+ * Core module maintaining sample store and exports.
  * Author: Dhruv Patel <2025ca01056@wilp.bits-pilani.ac.in>
  */
 
@@ -10,6 +10,7 @@
 #include <linux/module.h>
 #include <linux/kernel.h>
 #include <linux/spinlock.h>
+#include "bitscore.h"
 
 #define MAX_SAMPLES 100
 
@@ -53,9 +54,6 @@ int bitscore_sample_count(void)
 	return count;
 }
 EXPORT_SYMBOL_GPL(bitscore_sample_count);
-
-/* Helper function defined in stats.c */
-extern int bitscore_get_sum(const int *arr, int count);
 
 /**
  * bitscore_sample_avg - Calculate the average of recorded samples

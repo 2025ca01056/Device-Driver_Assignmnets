@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-2.0
 /*
- * ch04-stack/bitsfeed.c - Consumer module feeding sample data.
+ * Consumer module feeding sample data.
  * Author: Dhruv Patel <2025ca01056@wilp.bits-pilani.ac.in>
  */
 
@@ -12,15 +12,11 @@
 #include <linux/moduleparam.h>
 #include <linux/jiffies.h>
 #include <linux/ratelimit.h>
+#include "bitscore.h"
 
 static int nsamples = 5;
 module_param(nsamples, int, 0644);
 MODULE_PARM_DESC(nsamples, "Number of samples to generate (1-50)");
-
-/* External symbols exported by bitscore.ko */
-extern void bitscore_add_sample(int val);
-extern int bitscore_sample_count(void);
-extern int bitscore_sample_avg(void);
 
 static int __init bitsfeed_init(void)
 {

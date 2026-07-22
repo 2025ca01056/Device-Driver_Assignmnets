@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: GPL-2.0
 /*
- * ch04-stack/stats.c - Statistical helper for bitscore module.
+ * Statistical helper for bitscore module.
  * Author: Dhruv Patel <2025ca01056@wilp.bits-pilani.ac.in>
  */
 
 #include <linux/kernel.h>
+#include "bitscore.h"
 
 /**
  * bitscore_get_sum - Helper to compute sum of integer array

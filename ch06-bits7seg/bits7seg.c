@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-2.0
 /*
- * ch06-bits7seg/bits7seg.c - Emulated 7-segment display multi-minor char driver.
+ * Emulated 7-segment display multi-minor char driver.
  * Author: Dhruv Patel <2025ca01056@wilp.bits-pilani.ac.in>
  */
 
