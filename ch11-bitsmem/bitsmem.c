@@ -69,6 +69,9 @@ static int bitsmem_alloc_n(u64 n)
 	struct bits_rec *r;
 	LIST_HEAD(batch);
 
+	if (n > 5000000)   /* refuse unreasonably large single requests */
+		return -ENOMEM;
+
 	for (i = 0; i < n; i++) {
 		r = kmem_cache_alloc(bmem.cache, GFP_KERNEL);
 		if (!r) {
@@ -268,6 +271,14 @@ static const struct file_operations bitsmem_fops = {
  * Module init / exit
  * -------------------------------------------------------------------
  */
+static void bits_rec_ctor(void *obj)
+{
+	/* no-op constructor; its only purpose is to prevent SLUB from
+	 * merging this cache with other same-size caches, so it shows
+	 * up under its own name "bits_rec" in /proc/slabinfo.
+	 */
+}
+
 static int __init bitsmem_init(void)
 {
 	int ret;
@@ -279,7 +290,7 @@ static int __init bitsmem_init(void)
 	memset(&bmem.bench, 0, sizeof(bmem.bench));
 
 	bmem.cache = kmem_cache_create("bits_rec", sizeof(struct bits_rec),
-					0, SLAB_HWCACHE_ALIGN, NULL);
+					0, SLAB_HWCACHE_ALIGN, bits_rec_ctor);
 	if (!bmem.cache) {
 		pr_err("%s: kmem_cache_create failed\n", DRV_NAME);
 		return -ENOMEM;
